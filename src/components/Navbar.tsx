@@ -367,53 +367,7 @@ export default function Navbar() {
                   <ChevronRight size={18} />
                 </Link>
 
-                <Link
-                  href="/shop/new"
-                  className="flex items-center justify-between p-4 pl-10 rounded-md hover:bg-blue-700 hover:shadow-md transition-all duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span>New Vehicles</span>
-                  <ChevronRight size={18} />
-                </Link>
-
-                <Link
-                  href="/shop/used"
-                  className="flex items-center justify-between p-4 pl-10 rounded-md hover:bg-blue-700 hover:shadow-md transition-all duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span>Used Vehicles</span>
-                  <ChevronRight size={18} />
-                </Link>
-
-                <Link
-                  href="/shop/special-offers"
-                  className="flex items-center justify-between p-4 pl-10 rounded-md hover:bg-blue-700 hover:shadow-md transition-all duration-200"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span>Special Offers</span>
-                  <ChevronRight size={18} />
-                </Link>
-
                 <div className="border-t border-blue-700 my-2"></div>
-
-                <Link
-                  href="/financing"
-                  className={`flex items-center justify-between p-4 rounded-md ${
-                    activeTab === "financing"
-                      ? "bg-blue-700 shadow-md"
-                      : "hover:bg-blue-700 hover:shadow-md"
-                  } transition-all duration-200`}
-                  onClick={() => {
-                    setActiveTab("financing");
-                    setMobileMenuOpen(false);
-                  }}
-                >
-                  <div className="flex items-center">
-                    <CreditCard size={18} className="mr-3" />
-                    <span className="font-medium">Financing</span>
-                  </div>
-                  <ChevronRight size={18} />
-                </Link>
 
                 <Link
                   href="/services"
@@ -482,36 +436,14 @@ export default function Navbar() {
                     <Phone size={16} className="mr-3 text-blue-300" />
                     <span>+1(571) 775 1602</span>
                   </div>
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <MapPin size={16} className="mr-3 text-blue-300" />
                     <span>123 Auto Drive, Cartown, CT 12345</span>
-                  </div>
+                  </div> */}
                   <div className="flex items-center">
                     <Clock size={16} className="mr-3 text-blue-300" />
                     <span>Mon-Sat: 9AM-8PM</span>
                   </div>
-                </div>
-
-                {/* Mobile social links */}
-                <div className="flex items-center space-x-6 mt-6">
-                  <a
-                    href="#"
-                    className="text-blue-300 hover:text-white transition-colors"
-                  >
-                    <Facebook size={20} />
-                  </a>
-                  <a
-                    href="#"
-                    className="text-blue-300 hover:text-white transition-colors"
-                  >
-                    <Instagram size={20} />
-                  </a>
-                  <a
-                    href="#"
-                    className="text-blue-300 hover:text-white transition-colors"
-                  >
-                    <Twitter size={20} />
-                  </a>
                 </div>
               </div>
             </motion.div>

@@ -145,7 +145,7 @@ export default function Footer() {
                 />
                 <div>
                   <p className="text-white font-medium">Mon-Fri</p>
-                  <p className="text-gray-400">9AM - 7PM</p>
+                  <p className="text-gray-400">9AM - 8PM</p>
                 </div>
               </li>
               <li className="flex items-start">
