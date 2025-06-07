@@ -1275,7 +1275,10 @@ export default function FeaturedCars() {
                         </div>
                       </div>
 
-                      <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                      <Button
+                        onClick={() => router.push("/about")}
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                      >
                         Learn more about our guarantees
                       </Button>
                     </div>
@@ -1302,7 +1305,10 @@ export default function FeaturedCars() {
                 easiest way to buy a quality vehicle online.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button onClick={()=>router.push("/shop")} className="bg-white hover:bg-gray-100 text-blue-600 font-medium px-8 py-6 text-lg">
+                <Button
+                  onClick={() => router.push("/shop")}
+                  className="bg-white hover:bg-gray-100 text-blue-600 font-medium px-8 py-6 text-lg"
+                >
                   Browse inventory
                 </Button>
               </div>

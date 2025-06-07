@@ -614,7 +614,10 @@ export default function Home() {
             </div>
 
             <div className="mt-16 text-center">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white py-6 px-8 rounded-xl">
+              <Button
+                onClick={() => router.push("/about")}
+                className="bg-blue-600 hover:bg-blue-700 text-white py-6 px-8 rounded-xl"
+              >
                 Learn more about our guarantees
                 <ArrowRight size={16} className="ml-2" />
               </Button>

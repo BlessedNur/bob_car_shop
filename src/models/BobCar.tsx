@@ -97,4 +97,4 @@ const BobCarSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.models.BobCar || mongoose.model("Car", BobCarSchema);
+export default mongoose.models.BobCar || mongoose.model("BobCar", BobCarSchema);
