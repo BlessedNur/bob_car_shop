@@ -257,42 +257,60 @@ export default function OrderPage({ params }: { params: { id: string } }) {
   };
 
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validateForm()) {
       setIsSubmitting(true);
 
-      // Prepare email content
-      const subject = `Inquiry about ${carDetails.year} ${carDetails.make} ${carDetails.model} (ID: ${params.id})`;
-      const body = `
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Address: ${formData.address}
-Client's Preferred Contact Method: ${formData.preferredContact}
+      try {
+        const response = await fetch("/api/send-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type: "order",
+            formData: {
+              ...formData,
+              vehicleName: `${carDetails!.year} ${carDetails!.make} ${
+                carDetails!.model
+              }`,
+              vehicleId: params.id,
+              vehiclePrice: formatPrice(
+                carDetails!.price,
+                carDetails!.currency || "$"
+              ),
+            },
+          }),
+        });
 
-Message:
-${formData.message}
+        if (!response.ok) {
+          throw new Error("Failed to send message");
+        }
 
-
-This message was sent from patriot auto webiste.
-`;
-
-      // Encode email parameters
-      const mailtoLink = `mailto:info@patriotautosales.com?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(body)}`;
-
-      // Open email client
-      window.open(mailtoLink, "_blank");
-
-      // Simulate API call for UI feedback
-      setTimeout(() => {
-        setIsSubmitting(false);
         setIsSubmitted(true);
-        toast.success("Your message has been prepared in your email client!");
-      }, 1000);
+        toast.success("Your inquiry has been sent successfully!");
+
+        // Reset form after successful submission
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          message: "",
+          preferredContact: "email",
+          agreeToTerms: false,
+          requestTestDrive: false,
+          requestInspection: false,
+          requestFinancing: false,
+        });
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        toast.error("Failed to send your inquiry. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 

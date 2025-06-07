@@ -2,20 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Suspense } from "react";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import {
   Loader2,
   CheckCircle,
   ChevronRight,
-  MapPin,
   Phone,
   Mail,
   Clock,
-  MessageSquare,
-  Calendar,
-  Users,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -28,21 +22,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-function ContactPage() {
-  const router = useRouter();
+export default function OrderPage() {
+  const searchParams = useSearchParams();
+  const vehicleName = searchParams.get("vehicle") || "Selected Vehicle";
+
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     phone: "",
-    subject: "",
     message: "",
     preferredContact: "email",
-    subscribe: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -70,11 +63,6 @@ function ContactPage() {
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle checkbox changes
-  const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormState((prev) => ({ ...prev, [name]: checked }));
-  };
-
   // Form validation
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -91,10 +79,6 @@ function ContactPage() {
 
     if (!formState.phone.trim()) {
       newErrors.phone = "Phone number is required";
-    }
-
-    if (!formState.subject.trim()) {
-      newErrors.subject = "Subject is required";
     }
 
     if (!formState.message.trim()) {
@@ -122,8 +106,11 @@ function ContactPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          type: "contact",
-          formData: formState,
+          type: "order",
+          formData: {
+            ...formState,
+            vehicleName,
+          },
         }),
       });
 
@@ -137,15 +124,13 @@ function ContactPage() {
         name: "",
         email: "",
         phone: "",
-        subject: "",
         message: "",
         preferredContact: "email",
-        subscribe: false,
       });
 
       // Scroll to top of form
       window.scrollTo({
-        top: document.getElementById("contact-form")?.offsetTop || 0,
+        top: document.getElementById("order-form")?.offsetTop || 0,
         behavior: "smooth",
       });
 
@@ -156,7 +141,7 @@ function ContactPage() {
     } catch (error) {
       console.error("Error submitting form:", error);
       setErrors({
-        form: "There was an error submitting your message. Please try again.",
+        form: "There was an error submitting your inquiry. Please try again.",
       });
     } finally {
       setIsSubmitting(false);
@@ -174,11 +159,11 @@ function ContactPage() {
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                  Contact Us
+                  Order Inquiry
                 </h1>
                 <p className="text-lg md:text-xl text-blue-100 max-w-2xl">
-                  Have questions about a vehicle or need assistance? Our team is
-                  here to help you.
+                  Interested in {vehicleName}? Fill out the form below and we'll
+                  get back to you shortly.
                 </p>
 
                 {/* Breadcrumb */}
@@ -187,50 +172,16 @@ function ContactPage() {
                     Home
                   </Link>
                   <ChevronRight size={16} className="mx-2" />
-                  <span className="font-medium text-white">Contact Us</span>
+                  <Link
+                    href="/shop"
+                    className="hover:text-white transition-colors"
+                  >
+                    Shop
+                  </Link>
+                  <ChevronRight size={16} className="mx-2" />
+                  <span className="font-medium text-white">Order Inquiry</span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Contact information cards */}
-          <div className="container mx-auto px-4 max-w-5xl -mt-8 md:-mt-12 mb-12 md:mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Phone card */}
-              <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center">
-                <div className="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-                  <Phone className="text-blue-600" size={24} />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Call Us</h3>
-                <p className="text-gray-500 mb-4">
-                  Our team is available Monday to Saturday
-                </p>
-                <a
-                  href="tel:+15551234567"
-                  className="text-blue-600 font-semibold text-lg hover:underline"
-                >
-                  +1(571) 775 1602
-                </a>
-              </div>
-
-              {/* Email card */}
-              <div className="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center">
-                <div className="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-                  <Mail className="text-blue-600" size={24} />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">Email Us</h3>
-                <p className="text-gray-500 mb-4">
-                  We'll respond to your inquiry promptly
-                </p>
-                <a
-                  href="mailto:info@patriotautosales.com"
-                  className="text-blue-600 font-semibold hover:underline"
-                >
-                  info@patriotautosales.com
-                </a>
-              </div>
-
-              {/* Visit card */}
             </div>
           </div>
 
@@ -238,15 +189,15 @@ function ContactPage() {
           <div className="py-16 md:py-24">
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-                {/* Contact form */}
+                {/* Order form */}
                 <div className="lg:col-span-3 bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-200">
-                  <div id="contact-form">
+                  <div id="order-form">
                     <h2 className="text-2xl font-bold mb-2">
-                      Send Us a Message
+                      Send Your Inquiry
                     </h2>
                     <p className="text-gray-600 mb-6">
                       Fill out the form below and we'll get back to you as soon
-                      as possible.
+                      as possible about {vehicleName}.
                     </p>
 
                     {/* Success message */}
@@ -258,10 +209,10 @@ function ContactPage() {
                         />
                         <div>
                           <h4 className="font-medium text-green-800">
-                            Message sent successfully!
+                            Inquiry sent successfully!
                           </h4>
                           <p className="text-green-700 text-sm">
-                            Thank you for contacting us. We'll respond to your
+                            Thank you for your interest. We'll respond to your
                             inquiry shortly.
                           </p>
                         </div>
@@ -348,27 +299,29 @@ function ContactPage() {
                           )}
                         </div>
 
-                        {/* Subject field */}
+                        {/* Preferred contact method */}
                         <div>
                           <label
-                            htmlFor="subject"
+                            htmlFor="preferredContact"
                             className="block text-sm font-medium text-gray-700 mb-1"
                           >
-                            Subject <span className="text-red-500">*</span>
+                            Preferred Contact Method
                           </label>
-                          <Input
-                            id="subject"
-                            name="subject"
-                            placeholder="Vehicle Inquiry"
-                            value={formState.subject}
-                            onChange={handleChange}
-                            className={errors.subject ? "border-red-300" : ""}
-                          />
-                          {errors.subject && (
-                            <p className="mt-1 text-sm text-red-600">
-                              {errors.subject}
-                            </p>
-                          )}
+                          <Select
+                            value={formState.preferredContact}
+                            onValueChange={(value) =>
+                              handleSelectChange("preferredContact", value)
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select preferred contact method" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="email">Email</SelectItem>
+                              <SelectItem value="phone">Phone</SelectItem>
+                              <SelectItem value="text">Text Message</SelectItem>
+                            </SelectContent>
+                          </Select>
                         </div>
                       </div>
 
@@ -383,7 +336,7 @@ function ContactPage() {
                         <Textarea
                           id="message"
                           name="message"
-                          placeholder="I'm interested in a vehicle on your website..."
+                          placeholder="I'm interested in this vehicle..."
                           rows={5}
                           value={formState.message}
                           onChange={handleChange}
@@ -394,53 +347,6 @@ function ContactPage() {
                             {errors.message}
                           </p>
                         )}
-                      </div>
-
-                      {/* Preferred contact method */}
-                      <div className="mb-6">
-                        <label
-                          htmlFor="preferredContact"
-                          className="block text-sm font-medium text-gray-700 mb-1"
-                        >
-                          Preferred Contact Method
-                        </label>
-                        <Select
-                          value={formState.preferredContact}
-                          onValueChange={(value) =>
-                            handleSelectChange("preferredContact", value)
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select preferred contact method" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="email">Email</SelectItem>
-                            <SelectItem value="phone">Phone</SelectItem>
-                            <SelectItem value="text">Text Message</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      {/* Newsletter subscription */}
-                      <div className="flex items-start mb-8">
-                        <Checkbox
-                          id="subscribe"
-                          checked={formState.subscribe}
-                          onCheckedChange={(checked) =>
-                            handleCheckboxChange(
-                              "subscribe",
-                              checked as boolean
-                            )
-                          }
-                          className="mt-1"
-                        />
-                        <label
-                          htmlFor="subscribe"
-                          className="ml-2 text-sm text-gray-600"
-                        >
-                          Subscribe to our newsletter for exclusive offers, new
-                          arrivals, and automotive tips.
-                        </label>
                       </div>
 
                       {/* Submit button */}
@@ -455,7 +361,7 @@ function ContactPage() {
                             Sending...
                           </>
                         ) : (
-                          "Send Message"
+                          "Send Inquiry"
                         )}
                       </Button>
                     </form>
@@ -493,13 +399,13 @@ function ContactPage() {
                     </h3>
                     <p className="text-blue-100 mb-4">
                       Our team is ready to help with any urgent questions about
-                      our vehicles.
+                      this vehicle.
                     </p>
                     <div className="space-y-4">
                       <Button
                         className="w-full bg-white hover:bg-gray-100 text-blue-600 flex items-center justify-center"
                         onClick={() =>
-                          (window.location.href = "tel:+15551234567")
+                          (window.location.href = "tel:+15717751602")
                         }
                       >
                         <Phone size={18} className="mr-2" />
@@ -511,115 +417,10 @@ function ContactPage() {
               </div>
             </div>
           </div>
-
-          {/* Map Section */}
-          {/* <div className="bg-gray-100 py-16 md:py-24">
-            <div className="container mx-auto px-4 max-w-7xl">
-              <div className="text-center">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">Find Us</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Visit our dealership to explore our extensive inventory of
-                  quality vehicles and meet our friendly team.
-                </p>
-              </div>
-
-              <div className="h-96 w-full bg-gray-200 relative">
-             
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.7152203584424!2d-118.39395492357392!3d34.0522342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2b99c4a6f17a9%3A0x9e0c197ced5b98!2sLos%20Angeles%2C%20CA%2090210!5e0!3m2!1sen!2sus!4v1686517076212!5m2!1sen!2sus"
-                  className="absolute inset-0 w-full h-full"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-              </div>
-            </div>
-          </div> */}
-
-          {/* FAQ Section */}
-          <div className="py-16 md:py-24">
-            <div className="container mx-auto px-4 max-w-7xl">
-              <div className="text-center mb-10">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                  Frequently Asked Questions
-                </h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Find answers to common questions about our services, financing
-                  options, and more.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <h3 className="font-semibold text-lg mb-2">
-                    What financing options do you offer?
-                  </h3>
-                  <p className="text-gray-600">
-                    We offer a variety of financing options to suit different
-                    budgets and credit situations. Our finance team works with
-                    multiple lenders to get you the best rates possible.
-                  </p>
-                </div>
-
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <h3 className="font-semibold text-lg mb-2">
-                    Do you accept trade-ins?
-                  </h3>
-                  <p className="text-gray-600">
-                    Yes, we accept trade-ins of all makes and models. Our team
-                    will provide a fair market value for your current vehicle
-                    that can be applied toward your new purchase.
-                  </p>
-                </div>
-
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <h3 className="font-semibold text-lg mb-2">
-                    What documents do I need to purchase a vehicle?
-                  </h3>
-                  <p className="text-gray-600">
-                    You'll need a valid driver's license, proof of insurance,
-                    and proof of income. If financing, additional documents may
-                    be required based on the lender's requirements.
-                  </p>
-                </div>
-
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-                  <h3 className="font-semibold text-lg mb-2">
-                    Do you offer vehicle delivery?
-                  </h3>
-                  <p className="text-gray-600">
-                    Yes, we offer vehicle delivery within a 100-mile radius of
-                    our dealership. Contact our sales team for more information
-                    about delivery options and fees.
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center mt-8">
-                <Link href="/faq">
-                  <Button
-                    variant="outline"
-                    className="border-blue-600 text-blue-600 hover:bg-blue-50"
-                  >
-                    View All FAQs
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
       </main>
 
       <Footer />
     </div>
-  );
-}
-
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <ContactPage />
-    </Suspense>
   );
 }
