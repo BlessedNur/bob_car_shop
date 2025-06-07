@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Facebook,
   Instagram,
@@ -25,6 +25,27 @@ const navLinks = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubscribed(true);
+      setEmail("");
+
+      // Reset success message after 3 seconds
+      setTimeout(() => {
+        setIsSubscribed(false);
+      }, 3000);
+    }, 1000);
+  };
+
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-gray-950 text-white pt-16 pb-8 mt-auto relative overflow-hidden">
       {/* Subtle background gradient */}
@@ -57,17 +78,36 @@ export default function Footer() {
             <h4 className="text-lg font-medium mb-3">
               Subscribe to our newsletter
             </h4>
-            <div className="flex">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="px-4 py-3 bg-gray-800 border border-gray-700 text-white w-full md:w-64 rounded-l-md focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-              <button className="bg-blue-600 hover:bg-blue-700 px-6 py-3 font-medium rounded-r-md transition-colors flex items-center">
-                Subscribe
-                <ArrowRight size={16} className="ml-2" />
-              </button>
-            </div>
+            <form
+              onSubmit={handleNewsletterSubmit}
+              className="flex flex-col space-y-2"
+            >
+              <div className="flex">
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  className="px-4 py-3 bg-gray-800 border border-gray-700 text-white w-full md:w-64 rounded-l-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`bg-blue-600 hover:bg-blue-700 px-6 py-3 font-medium rounded-r-md transition-colors flex items-center ${
+                    isSubmitting ? "opacity-75 cursor-not-allowed" : ""
+                  }`}
+                >
+                  {isSubmitting ? "Subscribing..." : "Subscribe"}
+                  {!isSubmitting && <ArrowRight size={16} className="ml-2" />}
+                </button>
+              </div>
+              {isSubscribed && (
+                <p className="text-green-400 text-sm">
+                  Thank you for subscribing to our newsletter!
+                </p>
+              )}
+            </form>
           </div>
         </div>
 
