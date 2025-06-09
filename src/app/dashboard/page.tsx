@@ -197,7 +197,7 @@ const initialCarListings = [
 
 // Types
 type CarListing = (typeof initialCarListings)[0];
-type SortField = "title" | "price" | "createdAt";
+type SortField = "title" | "price" | "createdAt" | "mileage";
 type SortDirection = "asc" | "desc";
 
 export default function DashboardPage() {
@@ -293,6 +293,8 @@ export default function DashboardPage() {
       } else if (sortField === "createdAt") {
         comparison =
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      } else if (sortField === "mileage") {
+        comparison = a.mileage - b.mileage;
       } else {
         comparison = a.title.localeCompare(b.title);
       }
@@ -316,6 +318,11 @@ export default function DashboardPage() {
   // Format price
   const formatPrice = (price: number, currency: string) => {
     return `${currency}${price.toLocaleString()}`;
+  };
+
+  // Format mileage
+  const formatNumber = (mileage: number) => {
+    return mileage.toLocaleString();
   };
 
   // Handle sort toggle
@@ -585,6 +592,17 @@ export default function DashboardPage() {
                             )}
                           </button>
                         </TableHead>
+                        <TableHead>
+                          <button
+                            className="flex items-center font-medium"
+                            onClick={() => handleSort("mileage")}
+                          >
+                            Mileage
+                            {sortField === "mileage" && (
+                              <ArrowUpDown size={14} className="ml-1" />
+                            )}
+                          </button>
+                        </TableHead>
                         <TableHead className="hidden md:table-cell">
                           <button
                             className="flex items-center font-medium"
@@ -655,7 +673,11 @@ export default function DashboardPage() {
                                 {formatPrice(car.price, car.currency)}
                               </div>
                             </TableCell>
-
+                            <TableCell>
+                              <div className="font-medium">
+                                {formatNumber(car.mileage)} mi
+                              </div>
+                            </TableCell>
                             <TableCell className="hidden md:table-cell text-gray-500">
                               {formatDate(car.createdAt)}
                             </TableCell>

@@ -144,11 +144,11 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="mailto:info@patriotautosales.com"
+                  href="mailto:contact@patriotautossales.com"
                   className="flex items-center text-gray-400 hover:text-white transition-colors"
                 >
                   <Mail size={18} className="mr-3 text-red-500" />
-                  <span>info@patriotautosales.com</span>
+                  <span>contact@patriotautossales.com</span>
                 </a>
               </li>
             </ul>

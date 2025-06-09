@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Suspense } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import {
   Loader2,
   CheckCircle,
@@ -132,7 +133,7 @@ function ContactPage() {
       }
 
       // Success
-      setSubmitted(true);
+      toast.success("Message sent successfully! We'll get back to you soon.");
       setFormState({
         name: "",
         email: "",
@@ -148,16 +149,9 @@ function ContactPage() {
         top: document.getElementById("contact-form")?.offsetTop || 0,
         behavior: "smooth",
       });
-
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitted(false);
-      }, 5000);
     } catch (error) {
       console.error("Error submitting form:", error);
-      setErrors({
-        form: "There was an error submitting your message. Please try again.",
-      });
+      toast.error("Failed to send your message. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -223,10 +217,10 @@ function ContactPage() {
                   We'll respond to your inquiry promptly
                 </p>
                 <a
-                  href="mailto:info@patriotautosales.com"
+                  href="mailto:contact@patriotautossales.com"
                   className="text-blue-600 font-semibold hover:underline"
                 >
-                  info@patriotautosales.com
+                  contact@patriotautossales.com
                 </a>
               </div>
 
@@ -248,25 +242,6 @@ function ContactPage() {
                       Fill out the form below and we'll get back to you as soon
                       as possible.
                     </p>
-
-                    {/* Success message */}
-                    {submitted && (
-                      <div className="mb-6 bg-green-50 border border-green-100 rounded-lg p-4 flex items-start">
-                        <CheckCircle
-                          className="text-green-500 mr-3 mt-0.5 flex-shrink-0"
-                          size={20}
-                        />
-                        <div>
-                          <h4 className="font-medium text-green-800">
-                            Message sent successfully!
-                          </h4>
-                          <p className="text-green-700 text-sm">
-                            Thank you for contacting us. We'll respond to your
-                            inquiry shortly.
-                          </p>
-                        </div>
-                      </div>
-                    )}
 
                     {/* Error message */}
                     {errors.form && (
