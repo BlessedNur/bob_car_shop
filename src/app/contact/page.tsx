@@ -450,6 +450,7 @@ function ContactPage() {
                         <span className="text-gray-600">Monday - Friday</span>
                         <span className="font-medium">9:00 AM - 8:00 PM</span>
                       </li>
+                      
                       <li className="flex justify-between text-sm">
                         <span className="text-gray-600">Saturday</span>
                         <span className="font-medium">10:00 AM - 6:00 PM</span>
