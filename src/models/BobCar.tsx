@@ -63,7 +63,14 @@ const BobCarSchema = new mongoose.Schema(
     },
     fuelType: {
       type: String,
-      enum: ["Petrol", "Diesel", "Electric", "Hybrid", "Plug-in Hybrid"],
+      enum: [
+        "Petrol",
+        "Diesel",
+        "Electric",
+        "Gasoline",
+        "Hybrid",
+        "Plug-in Hybrid",
+      ],
       default: "Petrol",
     },
     mileage: {
