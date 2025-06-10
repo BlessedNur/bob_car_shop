@@ -1015,6 +1015,7 @@ export default function DashboardPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Petrol">Petrol</SelectItem>
+                    <SelectItem value="Gasoline">Gasoline</SelectItem>
                     <SelectItem value="Diesel">Diesel</SelectItem>
                     <SelectItem value="Electric">Electric</SelectItem>
                     <SelectItem value="Hybrid">Hybrid</SelectItem>
