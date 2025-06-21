@@ -344,7 +344,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                       src={carDetails.images[activeImageIndex]}
                       alt={carDetails.title}
                    
-                      className="object-cover"
+                      className="object-cover w-full h-full"
                 
                     />
                   </motion.div>
