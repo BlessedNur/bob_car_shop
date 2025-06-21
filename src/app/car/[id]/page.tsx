@@ -340,12 +340,12 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                     transition={{ duration: 0.3 }}
                     className="relative w-full h-full"
                   >
-                    <Image
+                    <img
                       src={carDetails.images[activeImageIndex]}
                       alt={carDetails.title}
-                      fill
+                   
                       className="object-cover"
-                      priority
+                
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -395,7 +395,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
               onClick={() => setPreviewMode(true)}
               className="absolute bottom-8 right-8 z-10 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-2 rounded-full transition-colors cursor-pointer flex items-center gap-2"
             >
-              <Image size={20} />
+              <img size={20} />
               <span>View Gallery</span>
             </button>
           )}
@@ -675,7 +675,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                         <div className="flex gap-4">
                           <div className="relative w-24 h-24 rounded-xl overflow-hidden">
                             {car.images && car.images.length > 0 ? (
-                              <Image
+                              <img
                                 src={car.images[0]}
                                 alt={car.title}
                                 fill
@@ -751,7 +751,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
               </div>
             </div>
             <div className="flex-grow flex items-center justify-center relative">
-              <Image
+              <img
                 src={carDetails.images[activeImageIndex]}
                 alt={carDetails.title}
                 fill
@@ -782,7 +782,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                     }`}
                     onClick={() => setActiveImageIndex(index)}
                   >
-                    <Image
+                    <img
                       src={image}
                       alt={`${carDetails.title} - Image ${index + 1}`}
                       fill
@@ -819,7 +819,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
               </button>
             </div>
             <div className="flex-grow flex items-center justify-center relative">
-              <Image
+              <img
                 src={carDetails.images[activeImageIndex]}
                 alt={carDetails.title}
                 fill
@@ -850,7 +850,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                     }`}
                     onClick={() => setActiveImageIndex(index)}
                   >
-                    <Image
+                    <img
                       src={image}
                       alt={`${carDetails.title} - Image ${index + 1}`}
                       fill

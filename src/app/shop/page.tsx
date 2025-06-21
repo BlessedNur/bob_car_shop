@@ -1353,7 +1353,7 @@ function ShopPage() {
                               : " hover:border-gray-300 hover:bg-gray-100"
                           } transition-all duration-200`}
                         >
-                          <Image
+                          <img
                             src={brand.image}
                             alt={brand.displayName}
                             width={40}
@@ -1413,7 +1413,7 @@ function ShopPage() {
                           <div className="md:w-2/5 h-64 md:h-auto relative cursor-pointer overflow-hidden">
                             <div className="w-full h-full bg-gray-100">
                               {car.images && car.images.length > 0 ? (
-                                <Image
+                                <img
                                   src={car.images[0]}
                                   alt={car.title}
                                   fill
@@ -1645,7 +1645,7 @@ function ShopPage() {
                       >
                         <div className="relative h-48 sm:h-44 lg:h-48">
                           {car.images && car.images.length > 0 ? (
-                            <Image
+                            <img
                               src={car.images[0]}
                               alt={car.title}
                               fill

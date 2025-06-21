@@ -405,10 +405,10 @@ export default function OrderPage({ params }: { params: { id: string } }) {
               >
                 <div className="relative h-64 md:h-80">
                   {car.images && car.images.length > 0 ? (
-                    <Image
+                    <img
                       src={car.images[0]}
                       alt={car.title}
-                      fill
+                   
                       className="object-cover"
                     />
                   ) : (
