@@ -679,7 +679,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                                 src={car.images[0]}
                                 alt={car.title}
                                 fill
-                                className="object-cover transition-transform group-hover:scale-110"
+                                className="object-cover transition-transform group-hover:scale-110 w-full h-full"
                               />
                             ) : (
                               <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -755,7 +755,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                 src={carDetails.images[activeImageIndex]}
                 alt={carDetails.title}
                 fill
-                className="object-contain"
+                className="object-contain w-full h-full"
               />
               <button
                 onClick={prevImage}
@@ -786,7 +786,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                       src={image}
                       alt={`${carDetails.title} - Image ${index + 1}`}
                       fill
-                      className="object-cover"
+                      className="object-cover w-full h-full"
                     />
                   </div>
                 ))}
@@ -823,7 +823,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                 src={carDetails.images[activeImageIndex]}
                 alt={carDetails.title}
                 fill
-                className="object-contain"
+                className="object-contain w-full h-full"
               />
               <button
                 onClick={prevImage}
@@ -853,8 +853,8 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                     <img
                       src={image}
                       alt={`${carDetails.title} - Image ${index + 1}`}
-                      fill
-                      className="object-cover"
+                     
+                      className="object-cover w-full h-full"
                     />
                   </div>
                 ))}
