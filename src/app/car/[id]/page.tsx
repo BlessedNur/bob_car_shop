@@ -755,7 +755,7 @@ export default function CarDetailPage({ params }: { params: { id: string } }) {
                 src={carDetails.images[activeImageIndex]}
                 alt={carDetails.title}
                 fill
-                className="object-contain w-full h-full"
+                className="object-contain w-[70vw] h-[70vh]"
               />
               <button
                 onClick={prevImage}

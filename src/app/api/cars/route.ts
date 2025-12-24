@@ -6,9 +6,9 @@ import BobCar from '@/models/BobCar';
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "dwoaukreo",
-  api_key: process.env.CLOUDINARY_API_KEY || "378833648339572",
-  api_secret: process.env.CLOUDINARY_API_SECRET || "11daIfpiOnJEsAUeCIKzKShVzSw",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "drjlrzvs5",
+  api_key: process.env.CLOUDINARY_API_KEY || "711511444296455",
+  api_secret: process.env.CLOUDINARY_API_SECRET || "pD_IOxD3ht5oblZdjt2-gGdwAiM",
 });
 
 // GET all cars
