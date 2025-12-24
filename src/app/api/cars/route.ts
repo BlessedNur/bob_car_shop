@@ -6,9 +6,9 @@ import BobCar from '@/models/BobCar';
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "drjlrzvs5",
-  api_key: process.env.CLOUDINARY_API_KEY || "711511444296455",
-  api_secret: process.env.CLOUDINARY_API_SECRET || "pD_IOxD3ht5oblZdjt2-gGdwAiM",
+  cloud_name: "drjlrzvs5",
+  api_key:  "711511444296455",
+  api_secret: "pD_IOxD3ht5oblZdjt2-gGdwAiM",
 });
 
 // GET all cars
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
     
     if (body.images && body.images.length > 0) {
       // Filter out any images that are already URLs (not base64)
-      const imagesToUpload = body.images.filter(img => 
+      const imagesToUpload = body.images.filter((img: string) => 
         typeof img === 'string' && img.startsWith('data:')
       );
       

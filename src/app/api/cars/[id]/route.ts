@@ -6,21 +6,21 @@ import BobCar from "@/models/BobCar";
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "dwoaukreo",
-  api_key: process.env.CLOUDINARY_API_KEY || "378833648339572",
-  api_secret:
-    process.env.CLOUDINARY_API_SECRET || "11daIfpiOnJEsAUeCIKzKShVzSw",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "drjlrzvs5",
+  api_key: process.env.CLOUDINARY_API_KEY || "711511444296455",
+  api_secret: process.env.CLOUDINARY_API_SECRET || "pD_IOxD3ht5oblZdjt2-gGdwAiM",
 });
 
 // GET a specific car by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectToDatabase();
 
-    const car = await BobCar.findById(params.id);
+    const { id } = await params;
+    const car = await BobCar.findById(id);
 
     if (!car) {
       return NextResponse.json({ error: "Car not found" }, { status: 404 });
@@ -40,12 +40,13 @@ export async function GET(
 // UPDATE a car by ID
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const body = await request.json();
 
     await connectToDatabase();
+    const { id } = await params;
 
     // Handle image uploads to Cloudinary if new images are provided
     let imageUrls = body.images || [];
@@ -100,7 +101,7 @@ export async function PUT(
     delete updateData.id;
     delete updateData._id;
 
-    const updatedCar = await BobCar.findByIdAndUpdate(params.id, updateData, {
+    const updatedCar = await BobCar.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true,
     });
@@ -126,12 +127,13 @@ export async function PUT(
 // DELETE a car by ID
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectToDatabase();
 
-    const deletedCar = await BobCar.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const deletedCar = await BobCar.findByIdAndDelete(id);
 
     if (!deletedCar) {
       return NextResponse.json({ error: "Car not found" }, { status: 404 });
